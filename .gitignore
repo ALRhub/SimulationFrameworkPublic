@@ -1,0 +1,14 @@
+/panda_pybullet_mujoco/**
+__pycache__/**
+.idea/**
+MUJOCO_LOG.TXT
+/controllers/__pycache__/**
+**.pyc
+simulation/envs/data/ycb_dataset/ycb/*
+.idea
+.vscode
+ALRSim.**
+/gym_framework/mujoco_envs/pick_and_place_env/tests/models/*
+/gym_framework/mujoco_envs/pick_and_place_env/tests/runs/*
+/gym_framework/mujoco_envs/reach_env/tests/models/*
+/gym_framework/mujoco_envs/reach_env/tests/runs/*

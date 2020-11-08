@@ -1,0 +1,18 @@
+<mujocoinclude>
+    <actuator>
+        <position ctrllimited="true" forcelimited="true" ctrlrange="-2.9671 2.9671" forcerange="-87 87"
+        joint="panda_joint1" kp="8700.0" name="panda_joint1" />
+        <position ctrllimited="true" forcelimited="true" ctrlrange="-1.8326 1.8326" forcerange="-87 87"
+        joint="panda_joint2" kp="8700.0" name="panda_joint2" />
+        <position ctrllimited="true" forcelimited="true" ctrlrange="-2.9671 2.9671" forcerange="-87 87"
+        joint="panda_joint3" kp="8700.0" name="panda_joint3" />
+        <position ctrllimited="true" forcelimited="true" ctrlrange="-3.1416 0.0" forcerange="-87 87"
+        joint="panda_joint4" kp="8700.0" name="panda_joint4" />
+        <position ctrllimited="true" forcelimited="true" ctrlrange="-2.9671 2.9671" forcerange="-12 12"
+        joint="panda_joint5" kp="1200.0" name="panda_joint5" />
+        <position ctrllimited="true" forcelimited="true" ctrlrange="-3.7525 2.1817" forcerange="-12 12"
+        joint="panda_joint6" kp="1200.0" name="panda_joint6" />
+        <position ctrllimited="true" forcelimited="true" ctrlrange="-2.9671 2.9671" forcerange="-12 12"
+        joint="panda_joint7" kp="1200.0" name="panda_joint7" />
+    </actuator>
+</mujocoinclude>
