@@ -79,6 +79,10 @@
     └── sample  
 ```
 
+- Install system dependency (because this cannot be installed through conda unfortunately)
+
+	- ```sudo apt-get install libosmesa6-dev```
+
 - Prepare virtual environment and install everything
 
 	- Install the latest Anaconda3 or other Conda apps
