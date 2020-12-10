@@ -320,3 +320,12 @@ class MujocoSceneParser:
         sim = MjSim(model=model, nsubsteps=nsubsteps)
         os.remove(self.scene_xml)
         return sim, model
+
+    def set_damping(self, damping):
+        defaults = self._root.find('default').findall('default')
+        for default in defaults:
+            if default.attrib['class'] == 'panda:body':
+                for atr in default:
+                    if atr.tag == 'joint':
+                        atr.attrib['damping'] = str(damping)
+        self._tree.write(sim_framework_path(self._xml_path, 'main_scene.xml'))  # writes the changes to the file

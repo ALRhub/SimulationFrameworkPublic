@@ -41,47 +41,47 @@
              quat="0.00411744 0.564916 0.0132875 0.825031"/>
    <geom conaffinity="0" contype="0" group="1" mesh="link0v" name="panda_link0:geom1" rgba="1 1 1 1" type="mesh"/>
    <geom mesh="link0v" name="panda_link0:geom2" rgba="1 1 1 1" type="mesh"/>
-   <body name="panda_link1" pos="0 0 0.333">
+   <body childclass="panda:body" name="panda_link1" pos="0 0 0.333">
     <inertial diaginertia="0.0164224 0.0153969 0.00546286" mass="2.77281" pos="1.1399e-05 -0.0312655 -0.0693733"
               quat="0.98466 0.174481 -0.000101815 0.000347662"/>
-    <joint axis="0 0 1" damping="100" limited="true" name="panda_joint1" pos="0 0 0" range="-2.9671 2.9671"/>
+    <joint axis="0 0 1"  limited="true" name="panda_joint1" pos="0 0 0" range="-2.9671 2.9671"/>
     <geom conaffinity="0" contype="0" group="1" mesh="link1v" name="panda_joint1:geom1" rgba="1 1 1 1" type="mesh"/>
     <geom mesh="link1v" name="panda_joint1:geom2" rgba="1 1 1 1" type="mesh"/>
-    <body name="panda_link2" pos="0 0 0" quat="0.707107 -0.707107 0 0">
+    <body childclass="panda:body" name="panda_link2" pos="0 0 0" quat="0.707107 -0.707107 0 0">
      <inertial diaginertia="0.016787 0.0157415 0.00553027" mass="2.7996" pos="-1.31766e-05 -0.0703216 0.0311782"
                quat="0.57484 0.818266 -6.05764e-05 -6.61626e-05"/>
-     <joint axis="0 0 1" damping="100" limited="true" name="panda_joint2" pos="0 0 0"
+     <joint axis="0 0 1"  limited="true" name="panda_joint2" pos="0 0 0"
             range="-1.8326                     1.8326"/>
      <geom conaffinity="0" contype="0" group="1" mesh="link2v" name="panda_joint2:geom1" rgba="1 1 1 1" type="mesh"/>
      <geom mesh="link2v" name="panda_joint2:geom2" rgba="1 1 1 1" type="mesh"/>
-     <body name="panda_link3" pos="0 -0.316 0" quat="0.707107 0.707107 0 0">
+     <body childclass="panda:body" name="panda_link3" pos="0 -0.316 0" quat="0.707107 0.707107 0 0">
       <inertial diaginertia="0.00915257 0.00896477 0.00384742" mass="2.14603" pos="0.0443483 0.0249283 -0.03813"
                 quat="0.0615263 0.349824 0.234291 0.904956"/>
-      <joint axis="0 0 1" damping="100" limited="true" name="panda_joint3" pos="0 0 0" range="-2.9671 2.9671"/>
+      <joint axis="0 0 1"  limited="true" name="panda_joint3" pos="0 0 0" range="-2.9671 2.9671"/>
       <geom conaffinity="0" contype="0" group="1" mesh="link3v" name="panda_joint3:geom1" rgba="1 1 1 1" type="mesh"/>
       <geom mesh="link3v" name="panda_joint3:geom2" rgba="1 1 1 1" type="mesh"/>
-      <body name="panda_link4" pos="0.0825 0 0" quat="0.707107 0.707107 0 0">
+      <body childclass="panda:body" name="panda_link4" pos="0.0825 0 0" quat="0.707107 0.707107 0 0">
        <inertial diaginertia="0.00946899 0.00928491 0.00396694" mass="2.18807" pos="-0.0385503 0.0395256 0.0247162"
                  quat="0.813566 0.465041 0.309792 0.160858"/>
-       <joint axis="0 0 1" damping="100" limited="true" name="panda_joint4" pos="0 0 0" range="-3.1416 0.0873"/>
+       <joint axis="0 0 1"  limited="true" name="panda_joint4" pos="0 0 0" range="-3.1416 0.0873"/>
        <geom conaffinity="0" contype="0" group="1" mesh="link4v" name="panda_link4:geom1" rgba="1 1 1 1" type="mesh"/>
        <geom mesh="link4v" name="panda_link4:geom2" rgba="1 1 1 1" type="mesh"/>
-       <body name="panda_link5" pos="-0.0825 0.384 0" quat="0.707107 -0.707107 0 0">
+       <body childclass="panda:body" name="panda_link5" pos="-0.0825 0.384 0" quat="0.707107 -0.707107 0 0">
         <inertial diaginertia="0.0278873 0.0268823 0.00569569" mass="3.19545" pos="-6.36776e-05 0.0384124 -0.10997"
                   quat="0.990767 -0.135571 0.000963106 0.000694406"/>
-        <joint axis="0 0 1" damping="100" limited="true" name="panda_joint5" pos="0 0 0" range="-2.9671 2.9671"/>
+        <joint axis="0 0 1"  limited="true" name="panda_joint5" pos="0 0 0" range="-2.9671 2.9671"/>
         <geom conaffinity="0" contype="0" group="1" mesh="link5v" name="panda_link5:geom1" rgba="1 1 1 1" type="mesh"/>
         <geom mesh="link5v" name="panda_link5:geom2" rgba="1 1 1 1" type="mesh"/>
-        <body name="panda_link6" pos="0 0 0" quat="0.707107 0.707107 0 0">
+        <body childclass="panda:body" name="panda_link6" pos="0 0 0" quat="0.707107 0.707107 0 0">
          <inertial diaginertia="0.00412168 0.0033698 0.00213304" mass="1.35761" pos="0.0510023 0.00693267 0.00616899"
                    quat="-0.0460841 0.754362 0.044494 0.653325"/>
-         <joint axis="0 0 1" damping="100" limited="true" name="panda_joint6" pos="0 0 0" range="-0.0873 3.8223"/>
+         <joint axis="0 0 1"  limited="true" name="panda_joint6" pos="0 0 0" range="-0.0873 3.8223"/>
          <geom conaffinity="0" contype="0" group="1" mesh="link6v" name="panda_link6:geom1" rgba="1 1 1 1" type="mesh"/>
          <geom mesh="link6v" name="panda_link6:geom2" rgba="1 1 1 1" type="mesh"/>
-         <body name="panda_link7" pos="0.088 0 0" quat="0.707107 0.707107 0 0">
+         <body childclass="panda:body" name="panda_link7" pos="0.088 0 0" quat="0.707107 0.707107 0 0">
           <inertial diaginertia="0.000637671 0.000528056 0.000279577" mass="0.417345"
                     pos="0.0103614 0.0103596 0.0791078" quat="0.63547 0.278021 -0.670462 0.263369"/>
-          <joint axis="0 0 1" damping="100" limited="true" name="panda_joint7" pos="0 0 0" range="-2.9671 2.9671"/>
+          <joint axis="0 0 1"  limited="true" name="panda_joint7" pos="0 0 0" range="-2.9671 2.9671"/>
           <geom conaffinity="0" contype="0" group="1" mesh="link7v" name="panda_link7:geom1" rgba="1 1 1 1"
                 type="mesh"/>
           <geom mesh="link7v" name="panda_link7:geom2" rgba="1 1 1 1" solimp="1.998 1.999 0" type="mesh"/>
@@ -139,6 +139,9 @@
   <touch name="touchsensor:right" site="panda_rightfinger:site"/>
  </sensor>
  <default>
+  <default class="panda:body">
+   <joint damping="0" />
+  </default>
   <default class="panda:gripper">
    <geom condim="4" solimp="0.999 0.999 0.0001" type="box"/>
    <joint armature="10" damping="300" limited="true" range="0.001 0.04" type="slide"/>

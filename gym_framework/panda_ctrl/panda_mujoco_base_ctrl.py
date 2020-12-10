@@ -1,4 +1,5 @@
 from abc import abstractmethod
+import gym
 
 import numpy as np
 from classic_framework.mujoco.mujoco_utils.mujoco_controllers import \
@@ -16,6 +17,7 @@ class PandaBase(MujocoController):
         self.viewer = None
         self.joint_names = None
         self.gripper_names = None
+        self.workspace = None
         self.joint_indices = [x for x in range(1, num_dof + 1)]
         self.render = render
         self.num_dof = num_dof
@@ -23,6 +25,7 @@ class PandaBase(MujocoController):
     def env_setup(self, sim, viewer):
         self.sim = sim
         self.viewer = viewer
+        self.workspace = self.get_workspace()
 
         self.joint_names = [
             name for name in self.sim.model.joint_names if name.startswith('panda_joint')]
@@ -34,6 +37,21 @@ class PandaBase(MujocoController):
         assert len(
             self.gripper_names) == 2, "Error, found more gripper joints than expected."
 
+    def get_workspace(self):
+        """
+        Get the x,y, and z coordinate of the workspace. Can be used to constrain the movement of the robot or to
+        sample object positions when randomizing an environment.
+        """
+        workspace_low = np.array([self.sim.data.get_site_xpos('x_constrain_low')[0],
+                                  self.sim.data.get_site_xpos('y_constrain_low')[1],
+                                  self.sim.data.get_site_xpos('z_constrain_low')[2]])
+
+        workspace_high = np.array([self.sim.data.get_site_xpos('x_constrain_high')[0],
+                                   self.sim.data.get_site_xpos('y_constrain_high')[1],
+                                   self.sim.data.get_site_xpos('z_constrain_high')[2]])
+
+        return gym.spaces.Box(low=workspace_low, high=workspace_high)
+
     def bound_action(self, action):
         """Bounds the action to the [-1 1]. WARNING: This should not have an effect since the actions from the policy
         should already be in [-1,1]. This works as a backup.
@@ -44,7 +62,7 @@ class PandaBase(MujocoController):
         """Normalizes the action to the the given range [lower, upper].
         """
         return (self.action_space.high - self.action_space.low) * (
-            (action - lower) / (upper - lower)) + self.action_space.low
+                (action - lower) / (upper - lower)) + self.action_space.low
 
     def preprocess_action(self, action):
         """Bounds actions coming from the policy to [-1, 1] and normalizes them to [action_space.low, action_space.high]
@@ -89,3 +107,13 @@ class PandaBase(MujocoController):
         method.
         """
         raise NotImplementedError
+
+    @property
+    def joint_damping(self):
+        return 0
+
+    @property
+    def state_bounds(self):
+        low = -np.inf * np.ones_like(self.state)
+        high = np.inf * np.ones_like(self.state)
+        return low, high

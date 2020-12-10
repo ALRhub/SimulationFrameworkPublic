@@ -58,29 +58,31 @@ class ReachEnvBase(MujocoEnv):
 
     def step(self, action):
         gripper_gain = 1.
-        return super().step(np.concatenate([action[:3], [gripper_gain]]))
+        return super().step(np.concatenate([action[:-1], [gripper_gain]]))
 
 
 class ReachEnvMocapCtrl(ReachEnvBase):
-    def __init__(self, render=True, max_steps=400, nsubsteps=12, dt=2e-3, random_env=True, workspace_size='medium'):
+    def __init__(self, render=True, max_steps=250, nsubsteps=12, dt=2e-3, random_env=True, workspace_size='medium'):
         agent = PandaMocapControl(render)
         super().__init__(agent=agent, max_steps=max_steps, render=render, nsubsteps=nsubsteps, dt=dt,
                          random_env=random_env, workspace_size=workspace_size)
 
 
 class ReachEnvJointVelCtrl(ReachEnvBase):
-    def __init__(self, render=True):
+    def __init__(self, render=True, max_steps=2000, nsubsteps=12, dt=2e-3, random_env=True, workspace_size='medium'):
         agent = PandaJointVelControl(render)
-        super().__init__(agent, render)
+        super().__init__(agent=agent, max_steps=max_steps, render=render, nsubsteps=nsubsteps, dt=dt,
+                         random_env=random_env, workspace_size=workspace_size)
 
 
 class ReachEnvJointPosCtrl(ReachEnvBase):
-    def __init__(self, render=True):
+    def __init__(self, render=True, max_steps=2000, nsubsteps=12, dt=2e-3, random_env=True, workspace_size='medium'):
         agent = PandaJointPosControl(render)
-        super().__init__(agent, render)
+        super().__init__(agent=agent, max_steps=max_steps, render=render, nsubsteps=nsubsteps, dt=dt,
+                         random_env=random_env, workspace_size=workspace_size)
 
-
-class ReachEnvJointTorqueCtrl(ReachEnvBase):
-    def __init__(self, render=True):
+class ReachEnvTorqueCtrl(ReachEnvBase):
+    def __init__(self, render=True, max_steps=2000, nsubsteps=12, dt=2e-3, random_env=True, workspace_size='medium'):
         agent = PandaTorqueControl(render)
-        super().__init__(agent, render)
+        super().__init__(agent=agent, max_steps=max_steps, render=render, nsubsteps=nsubsteps, dt=dt,
+                         random_env=random_env, workspace_size=workspace_size)

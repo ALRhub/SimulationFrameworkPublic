@@ -43,7 +43,6 @@ class PandaMocapControl(PandaBase):
         """Resets the mocap welds that are used actuation.
         """
         super().env_setup(sim, viewer)
-        self.workspace = self.get_workspace()
         if self.sim.model.nmocap > 0 and self.sim.model.eq_data is not None:
             for i in range(self.sim.model.eq_data.shape[0]):
                 if self.sim.model.eq_type[i] == mujoco_py.const.EQ_WELD:
@@ -59,17 +58,6 @@ class PandaMocapControl(PandaBase):
         self.sim.data.set_mocap_quat('panda:mocap', gripper_rotation)
         for _ in range(10):
             self.sim.step()
-
-    def get_workspace(self):
-        workspace_low = np.array([self.sim.data.get_site_xpos('x_constrain_low')[0],
-                                  self.sim.data.get_site_xpos('y_constrain_low')[1],
-                                  self.sim.data.get_site_xpos('z_constrain_low')[2]])
-
-        workspace_high = np.array([self.sim.data.get_site_xpos('x_constrain_high')[0],
-                                   self.sim.data.get_site_xpos('y_constrain_high')[1],
-                                   self.sim.data.get_site_xpos('z_constrain_high')[2]])
-
-        return gym.spaces.Box(low=workspace_low, high=workspace_high)
 
     @property
     def action_dimension(self):
@@ -214,3 +202,7 @@ class PandaMocapControl(PandaBase):
             assert (mocap_id != -1)
             self.sim.data.mocap_pos[mocap_id][:] = self.sim.data.body_xpos[body_idx]
             self.sim.data.mocap_quat[mocap_id][:] = self.sim.data.body_xquat[body_idx]
+
+    @property
+    def joint_damping(self):
+        return 300

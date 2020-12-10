@@ -1,47 +1,36 @@
+<!--<mujocoinclude>-->
+<!--    <actuator>-->
+<!--        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true"-->
+<!--                  joint="panda_joint1" kv="7.5" name="panda_joint1" />-->
+<!--        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true"-->
+<!--                  joint="panda_joint2" kv="13" name="panda_joint2" />-->
+<!--        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true"-->
+<!--                  joint="panda_joint3" kv="18" name="panda_joint3" />-->
+<!--        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true"-->
+<!--                  joint="panda_joint4" kv="14" name="panda_joint4" />-->
+<!--        <velocity ctrllimited="true" ctrlrange="-2.6100 2.6100" forcerange="-12 12" forcelimited="true"-->
+<!--                  joint="panda_joint5" kv="5" name="panda_joint5" />-->
+<!--        <velocity ctrllimited="true" ctrlrange="-2.6100 2.6100" forcerange="-12 12" forcelimited="true"-->
+<!--                  joint="panda_joint6" kv="5" name="panda_joint6" />-->
+<!--        <velocity ctrllimited="true" ctrlrange="-2.6100 2.6100" forcerange="-12 12" forcelimited="true"-->
+<!--                  joint="panda_joint7" kv="5" name="panda_joint7" />-->
+<!--    </actuator>-->
+<!--</mujocoinclude>-->
 <mujocoinclude>
     <actuator>
-        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true" joint="panda_joint1" kv="100"
-                  name="panda_joint1" />
-        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true" joint="panda_joint2" kv="100"
-                  name="panda_joint2" />
-        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true" joint="panda_joint3" kv="100"
-                  name="panda_joint3" />
-        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true" joint="panda_joint4" kv="100"
-                  name="panda_joint4" />
-        <velocity ctrllimited="true" ctrlrange="-2.6100 2.6100" forcerange="-12 12" forcelimited="true" joint="panda_joint5" kv="100"
-                  name="panda_joint5" />
-        <velocity ctrllimited="true" ctrlrange="-2.6100 2.6100" forcerange="-12 12" forcelimited="true" joint="panda_joint6" kv="100"
-                  name="panda_joint6" />
-        <velocity ctrllimited="true" ctrlrange="-2.9671 2.9671" forcerange="-12 12" forcelimited="true" joint="panda_joint7" kv="100"
-                  name="panda_joint7" />
+        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true"
+                  joint="panda_joint1" kv="7" name="panda_joint1" />
+        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true"
+                  joint="panda_joint2" kv="1" name="panda_joint2" />
+        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true"
+                  joint="panda_joint3" kv="15" name="panda_joint3" />
+        <velocity ctrllimited="true" ctrlrange="-2.1750 2.1750" forcerange="-87 87" forcelimited="true"
+                  joint="panda_joint4" kv="1" name="panda_joint4" />
+        <velocity ctrllimited="true" ctrlrange="-2.6100 2.6100" forcerange="-12 12" forcelimited="true"
+                  joint="panda_joint5" kv="3" name="panda_joint5" />
+        <velocity ctrllimited="true" ctrlrange="-2.6100 2.6100" forcerange="-12 12" forcelimited="true"
+                  joint="panda_joint6" kv="3" name="panda_joint6" />
+        <velocity ctrllimited="true" ctrlrange="-2.6100 2.6100" forcerange="-12 12" forcelimited="true"
+                  joint="panda_joint7" kv="3" name="panda_joint7" />
     </actuator>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </mujocoinclude>

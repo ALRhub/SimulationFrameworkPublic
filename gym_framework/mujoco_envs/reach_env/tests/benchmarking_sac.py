@@ -3,9 +3,9 @@ from stable_baselines3 import SAC
 from stable_baselines3.sac import MlpPolicy as SacMlpPolicy
 from torch.utils.tensorboard import SummaryWriter
 
-from gym_framework.mujoco_envs.reach_env.reach_env import ReachEnvMocapCtrl
+from gym_framework.mujoco_envs.reach_env.reach_env import ReachEnvJointVelCtrl, ReachEnvMocapCtrl
 
-EPISODE_LENGTH = 400
+EPISODE_LENGTH = 250
 NSUBSTEPS = 12
 
 
@@ -25,7 +25,8 @@ if __name__ == '__main__':
 
     logger = SummaryWriter()
 
-    env = ReachEnvMocapCtrl(render=0, max_steps=EPISODE_LENGTH, nsubsteps=NSUBSTEPS, random_env=False)
+    env = ReachEnvJointVelCtrl(render=0, max_steps=EPISODE_LENGTH, nsubsteps=NSUBSTEPS, random_env=False)
+    # env = ReachEnvMocapCtrl(render=0, max_steps=EPISODE_LENGTH, nsubsteps=NSUBSTEPS, random_env=False)
     policy_kwargs = dict(
         # log_std_init=-1,
         # activation_fn=th.nn.Tanh,

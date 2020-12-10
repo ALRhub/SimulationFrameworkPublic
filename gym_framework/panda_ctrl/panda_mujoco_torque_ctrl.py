@@ -17,18 +17,12 @@ class PandaTorqueControl(PandaBase):
         assert len(action) == self.action_dimension, ("Error, wrong action dimension. Expected: " +
                                                       str(self.action_dimension) + ". Got:" + str(len(action)))
 
-        # action = self.bound_action(action).copy()
-        # self.panda.set_gripper_width = action[7]
-        # torques = action[:7]
-        # self.panda.command = torques
-        # self.panda.nextStep()
-
         action = self.bound_action(action).copy()
         gripper_ctrl = action[7]
-        joint_action = action[:7]
+        joint_action = action[:7] * self.sim.model.opt.timestep
 
         # Set the joint command for the simulation
-        self.sim.data.ctrl[:] = np.concatenate((joint_action, [gripper_ctrl, gripper_ctrl]))
+        self.sim.data.ctrl[:] = np.concatenate(([gripper_ctrl, gripper_ctrl], joint_action))
 
         # Apply gravity compensation
         self.sim.data.qfrc_applied[self.joint_indices] = self.sim.data.qfrc_bias[self.joint_indices]

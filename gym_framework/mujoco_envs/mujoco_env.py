@@ -42,6 +42,7 @@ class MujocoEnv(gym.Env, ABC):
         obj_list.append(MujocoWorkspace(workspace_size))
 
         self.xml_parser.set_control(control=agent, set_gripper=False)
+        self.xml_parser.set_damping(agent.joint_damping)
 
         # adding objects to the scene
         for obj in obj_list:
