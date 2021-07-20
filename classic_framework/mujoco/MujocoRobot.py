@@ -120,7 +120,7 @@ class MujocoRobot(RobotBase):
             self.initCounter = self.initCounter + 1
 
         self.counter = self.counter + 1
-        self.time_stamp += 1 * 0.001
+        self.time_stamp += 1 * self.dt
 
         # self.des_joint_pos = np.zeros((self.num_DoF,)) * np.nan
         # self.des_joint_vel = np.zeros((self.num_DoF,)) * np.nan
@@ -259,7 +259,7 @@ class MujocoRobot(RobotBase):
                 self.logger.logData()
             # Forward the simulation
             self.sim.step()
-            self.time_stamp += 1 * 0.001
+            self.time_stamp += 1 * self.dt
 
             # Render the scene
             if self.render:
