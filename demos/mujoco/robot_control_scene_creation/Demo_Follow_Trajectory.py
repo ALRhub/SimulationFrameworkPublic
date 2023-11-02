@@ -1,23 +1,45 @@
-from classic_framework.mujoco.MujocoRobot import MujocoRobot
-from classic_framework.mujoco.MujocoScene import MujocoScene as Scene
-from classic_framework.interface.Logger import RobotPlotFlags
-from classic_framework.utils.sim_path import sim_framework_path
+import os
 
 import numpy as np
 
-if __name__ == '__main__':
+from alr_sim.controllers.Controller import (
+    ModelBasedFeedforwardController,
+)
+from alr_sim.core.logger import RobotPlotFlags
+from alr_sim.sims.SimFactory import SimRepository
 
-    object_list = []
-    duration = 4
+if __name__ == "__main__":
     # Setup the scene
-    scene = Scene(object_list=object_list)
+    sim_factory = SimRepository.get_factory("mujoco")
 
-    mj_Robot = MujocoRobot(scene, gravity_comp=True, num_DoF=7)
-    mj_Robot.startLogging()
+    scene = sim_factory.create_scene()
+    robot = sim_factory.create_robot(scene)
+    scene.start()
+
     # load the trajectory you want to follow
-    path2file = sim_framework_path('demos/mujoco/robot_control_scene_creation/des_joint_traj.npy')
+    path2file = os.path.join(os.path.dirname(__file__), "des_joint_traj.npy")
     des_joint_trajectory = np.load(path2file)
-    mj_Robot.follow_JointTraj(des_joint_trajectory)
 
-    mj_Robot.stopLogging()
-    mj_Robot.logger.plot(plotSelection=RobotPlotFlags.JOINTS)
+    # robot.jointTrackingController = JointPDController()
+    robot.jointTrackingController = ModelBasedFeedforwardController()
+
+    scene.start_logging()
+    robot.follow_JointTraj(des_joint_trajectory)
+
+    scene.stop_logging()
+
+    rMSE = np.sqrt(
+        np.mean(
+            (robot.robot_logger.joint_pos - robot.robot_logger.des_joint_pos) ** 2,
+            axis=0,
+        )
+    )
+    print("Tracking Error: ", np.mean(rMSE))
+
+    path2file = "./des_task_traj.npy"
+    np.save(
+        path2file,
+        np.hstack([robot.robot_logger.cart_pos, robot.robot_logger.cart_quat]),
+    )
+
+    robot.robot_logger.plot(plot_selection=RobotPlotFlags.JOINTS)

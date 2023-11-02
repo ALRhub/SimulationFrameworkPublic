@@ -1,58 +1,112 @@
-import classic_framework.mujoco.mujoco_utils.mujoco_controllers as mj_ctrl
-from classic_framework.interface.Logger import RobotPlotFlags
-from classic_framework.mujoco.MujocoRobot import MujocoRobot
-from classic_framework.mujoco.MujocoScene import MujocoScene as Scene
-from classic_framework.mujoco.mujoco_utils.mujoco_scene_object import MujocoPrimitiveObject
+from alr_sim.core.logger import RobotPlotFlags
+from alr_sim.sims.SimFactory import SimRepository
+from alr_sim.sims.universal_sim.PrimitiveObjects import Box
 
-if __name__ == '__main__':
-    box1 = MujocoPrimitiveObject(obj_pos=[.5, -0.2, 0.35], obj_name="box1", geom_rgba=[0.1, 0.25, 0.3, 1])
-    box2 = MujocoPrimitiveObject(obj_pos=[.6, -0.1, 0.35], obj_name="box2", geom_rgba=[0.2, 0.3, 0.7, 1])
-    box3 = MujocoPrimitiveObject(obj_pos=[.4, -0.1, 0.35], obj_name="box3", geom_rgba=[1, 0, 0, 1])
-    box4 = MujocoPrimitiveObject(obj_pos=[.6, -0.0, 0.35], obj_name="box4", geom_rgba=[1, 0, 0, 1])
-    box5 = MujocoPrimitiveObject(obj_pos=[.6, 0.1, 0.35], obj_name="box5", geom_rgba=[1, 1, 1, 1])
-    box6 = MujocoPrimitiveObject(obj_pos=[.6, 0.2, 0.35], obj_name="box6", geom_rgba=[1, 0, 0, 1])
+if __name__ == "__main__":
+    box1 = Box(
+        name="box1",
+        init_pos=[0.5, -0.2, 0.35],
+        init_quat=[0, 1, 0, 0],
+        rgba=[0.1, 0.25, 0.3, 1],
+    )
+    box2 = Box(
+        name="box2",
+        init_pos=[0.6, -0.1, 0.35],
+        init_quat=[0, 1, 0, 0],
+        rgba=[0.2, 0.3, 0.7, 1],
+    )
+    box3 = Box(
+        name="box3",
+        init_pos=[0.4, -0.1, 0.35],
+        init_quat=[0, 1, 0, 0],
+        rgba=[1, 0, 0, 1],
+    )
+    box4 = Box(
+        name="box4",
+        init_pos=[0.6, -0.0, 0.35],
+        init_quat=[0, 1, 0, 0],
+        rgba=[1, 0, 0, 1],
+    )
+    box5 = Box(
+        name="box5",
+        init_pos=[0.6, 0.1, 0.35],
+        init_quat=[0, 1, 0, 0],
+        rgba=[1, 1, 1, 1],
+    )
+    box6 = Box(
+        name="box6",
+        init_pos=[0.6, 0.2, 0.35],
+        init_quat=[0, 1, 0, 0],
+        rgba=[1, 0, 0, 1],
+    )
 
-    table = MujocoPrimitiveObject(obj_pos=[0.5, 0.0, 0.2],
-                                  obj_name="table0",
-                                  geom_size=[0.25, 0.35, 0.2],
-                                  mass=2000)
+    table = Box(
+        name="table0",
+        init_pos=[0.5, 0.0, 0.2],
+        init_quat=[0, 1, 0, 0],
+        size=[0.25, 0.35, 0.2],
+        static=True,
+    )
 
     object_list = [box1, box2, box3, box4, box5, box6, table]
 
-    scene = Scene(object_list=object_list, control=mj_ctrl.MocapControl())  # if we want to do mocap control
-    # scene = Scene(object_list=object_list)                        # ik control is default
+    # Setup the scene
+    sim_factory = SimRepository.get_factory("mujoco")
 
-    mj_Robot = MujocoRobot(scene, gravity_comp=True, num_DoF=7)
+    scene = sim_factory.create_scene(object_list=object_list)
+    robot = sim_factory.create_robot(scene)
+    scene.start()
 
-    duration = 2  # you can specify how long a trajectory can be executed witht the duration
+    duration = (
+        2  # you can specify how long a trajectory can be executed witht the duration
+    )
 
-    mj_Robot.startLogging()  # this will start logging robots internal state
-    mj_Robot.set_gripper_width = 0.0  # we set the gripper to clos at the beginning
+    scene.start_logging()  # this will start logging robots internal state
+    robot.set_desired_gripper_width(0.0)  # we set the gripper to clos at the beginning
 
-    home_position = mj_Robot.current_c_pos.copy()  # store home position
-    home_orientation = mj_Robot.current_c_quat.copy()  # store initial orientation
+    home_position = robot.current_c_pos.copy()  # store home position
+    home_orientation = robot.current_c_quat.copy()  # store initial orientation
 
     # execute the pick and place movements
-    mj_Robot.gotoCartPositionAndQuat([0.5, -0.2, 0.6 - 0.1], [0, 1, 0, 0], duration=duration)
-    mj_Robot.set_gripper_width = 0.04
-    mj_Robot.gotoCartPositionAndQuat([0.5, -0.2, 0.52 - 0.1], [0, 1, 0, 0], duration=duration)
-    mj_Robot.set_gripper_width = 0.00
-    mj_Robot.gotoCartPositionAndQuat(home_position, home_orientation, duration=duration)
-    mj_Robot.gotoCartPositionAndQuat([0.5, 0.2, 0.6 - 0.1], [0, 1, 0, 0], duration=duration)
-    mj_Robot.set_gripper_width = 0.04
-    mj_Robot.gotoCartPositionAndQuat([0.6, -0.1, 0.6 - 0.1], [0, 1, 0, 0], duration=duration)
-    mj_Robot.gotoCartPositionAndQuat([0.6, -0.1, 0.52 - 0.1], [0, 1, 0, 0], duration=duration)
-    mj_Robot.set_gripper_width = 0.00
-    mj_Robot.gotoCartPositionAndQuat(home_position, home_orientation, duration=duration)
-    mj_Robot.gotoCartPositionAndQuat([0.5, 0.2, 0.6 - 0.1], [0, 1, 0, 0], duration=duration)
-    mj_Robot.set_gripper_width = 0.04
-    mj_Robot.gotoCartPositionAndQuat([.4, -0.1, 0.6 - 0.1], [0, 1, 0, 0], duration=duration)
-    mj_Robot.gotoCartPositionAndQuat([.4, -0.1, 0.52 - 0.1], [0, 1, 0, 0], duration=duration)
-    mj_Robot.set_gripper_width = 0.00
-    mj_Robot.gotoCartPositionAndQuat(home_position, home_orientation, duration=duration)
-    mj_Robot.gotoCartPositionAndQuat([0.5, 0.2, 0.65 - 0.1], [0, 1, 0, 0], duration=duration)
-    mj_Robot.set_gripper_width = 0.04
-    mj_Robot.gotoCartPositionAndQuat(home_position, home_orientation, duration=duration)
+    robot.gotoCartPositionAndQuat(
+        [0.5, -0.2, 0.6 - 0.1], [0, 1, 0, 0], duration=duration
+    )
+    robot.set_desired_gripper_width(0.04)
+    robot.smooth_spline = False
+    robot.gotoCartPositionAndQuat(
+        [0.5, -0.2, 0.52 - 0.1], [0, 1, 0, 0], duration=duration
+    )
+    robot.close_fingers(duration=0.3)
+    robot.gotoCartPositionAndQuat(home_position, home_orientation, duration=duration)
+    robot.gotoCartPositionAndQuat(
+        [0.5, 0.2, 0.6 - 0.1], [0, 1, 0, 0], duration=duration
+    )
+    robot.set_desired_gripper_width(0.04)
+    robot.gotoCartPositionAndQuat(
+        [0.6, -0.1, 0.6 - 0.1], [0, 1, 0, 0], duration=duration
+    )
+    robot.gotoCartPositionAndQuat(
+        [0.6, -0.1, 0.52 - 0.1], [0, 1, 0, 0], duration=duration
+    )
+    robot.close_fingers(duration=0.3)
+    robot.gotoCartPositionAndQuat(home_position, home_orientation, duration=duration)
+    robot.gotoCartPositionAndQuat(
+        [0.5, 0.2, 0.6 - 0.1], [0, 1, 0, 0], duration=duration
+    )
+    robot.set_desired_gripper_width(0.04)
+    robot.gotoCartPositionAndQuat(
+        [0.4, -0.1, 0.6 - 0.1], [0, 1, 0, 0], duration=duration
+    )
+    robot.gotoCartPositionAndQuat(
+        [0.4, -0.1, 0.52 - 0.1], [0, 1, 0, 0], duration=duration
+    )
+    robot.close_fingers(duration=0.3)
+    robot.gotoCartPositionAndQuat(home_position, home_orientation, duration=duration)
+    robot.gotoCartPositionAndQuat(
+        [0.5, 0.2, 0.65 - 0.1], [0, 1, 0, 0], duration=duration
+    )
+    robot.set_desired_gripper_width(0.04)
+    robot.gotoCartPositionAndQuat(home_position, home_orientation, duration=duration)
 
-    mj_Robot.stopLogging()
-    mj_Robot.logger.plot(RobotPlotFlags.JOINTS | RobotPlotFlags.END_EFFECTOR)
+    scene.stop_logging()
+    robot.robot_logger.plot(RobotPlotFlags.JOINTS | RobotPlotFlags.END_EFFECTOR)

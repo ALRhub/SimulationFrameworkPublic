@@ -1,0 +1,15 @@
+<mujoco model="CondimTestSphere">
+ <worldbody>
+  <body name="CONDIM_SPHERE" pos="0.6 0.0 0.05" quat="1 0 0 0">
+   <geom friction="1 0.005 0.0002" pos="0 0 0" rgba="0.5 0.5 0.5 0.4" size="0.02 0.02 0.02" type="sphere"/>
+
+   <site pos="0 0 0" rgba="1 1 1 1" size="0.004 0.004 0.004" type="sphere"/>
+
+   <site pos="0 0 0" rgba="1 0 0 1" size="0.01 0.001 0.001" type="box"/>
+   <site pos="0 0 0" rgba="0 1 0 1" size="0.001 0.01 0.001" type="box"/>
+   <site pos="0 0 0" rgba="0 0 1 1" size="0.001 0.001 0.01" type="box"/>
+   <freejoint/>
+  </body>
+
+ </worldbody>
+</mujoco>

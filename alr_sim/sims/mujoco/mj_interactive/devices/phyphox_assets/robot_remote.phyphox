@@ -1,0 +1,79 @@
+<phyphox xmlns="http://phyphox.org/xml" xmlns:editor="http://phyphox.org/editor/xml" version="1.7" editor:version="1.0" locale="en">
+    <title>ALR Robot Remote</title>
+    <category>ALR Experiments</category>
+    <color>009682</color>
+    <description>Controls the Simulator from phone movements</description>
+    <icon format="string">ALR</icon>
+    <data-containers>
+        <container size="1000" static="false">abs</container>
+        <container size="1000" static="false">abs (1)</container>
+        <container size="1000" static="false">product</container>
+        <container size="1000" static="false">product (1)</container>
+        <container size="1000" static="false">gyrX</container>
+        <container size="1000" static="false">gyrY</container>
+        <container size="1000" static="false">gyrZ</container>
+        <container size="1000" static="false">gyrT</container>
+        <container size="1000" static="false">linX</container>
+        <container size="1000" static="false">linY</container>
+        <container size="1000" static="false">linZ</container>
+        <container size="1000" static="false">linT</container>
+        <container size="1000" static="false">btnReset</container>
+        <container size="1000" static="false">btnPlot</container>
+    </data-containers>
+    <input>
+        <sensor editor:uuid="97" editor:posx="319.640625" editor:posy="165.1875" rate="0" average="false" type="linear_acceleration">
+            <output component="x">linX</output>
+            <output component="y">linY</output>
+            <output component="z">linZ</output>
+            <output component="t">linT</output>
+            <output component="abs">abs</output>
+        </sensor>
+        <sensor editor:uuid="98" editor:posx="343.15625" editor:posy="429.140625" rate="0" average="false" type="gyroscope">
+            <output component="x">gyrX</output>
+            <output component="y">gyrY</output>
+            <output component="z">gyrZ</output>
+            <output component="t">gyrT</output>
+            <output component="abs">abs (1)</output>
+        </sensor>
+    </input>
+    <output>
+    </output>
+    <analysis sleep="0"  onUserInput="false">
+    </analysis>
+    <views>
+        <view label="Robot Remote">
+            <value editor:uuid="131" editor:posx="553.828125" editor:posy="319.203125" label="Total Acceleration" size="1" precision="2" scientific="false"  factor="1" >
+                <input>abs</input>
+            </value>
+            <value editor:uuid="138" editor:posx="769.53125" editor:posy="778.671875" label="Total Turnrate" size="1" precision="2" scientific="false"  factor="1" >
+                <input>abs (1)</input>
+            </value>
+            <button editor:uuid="145" editor:posx="457" editor:posy="780.78125" label="Reset Robot Pose">
+                <input type="empty" />
+                <output>btnReset</output>
+            </button>
+            <button editor:uuid="158" editor:posx="453.78125" editor:posy="897.3125" label="Plot Robot Logs">
+                <input type="empty" />
+                <output>btnPlot</output>
+            </button>
+        </view>
+    </views>
+    <export>
+        <set name="Gyro">
+            <data name="gyrX">gyrX</data>
+            <data name="gyrY">gyrY</data>
+            <data name="gyrZ">gyrZ</data>
+            <data name="gyrT">gyrT</data>
+        </set>
+        <set name="LinAcc">
+            <data name="linX">linX</data>
+            <data name="linY">linY</data>
+            <data name="linZ">linZ</data>
+            <data name="linT">linT</data>
+        </set>
+        <set name="Buttons">
+            <data name="btnReset">btnReset</data>
+            <data name="btnPlot">btnPlot</data>
+        </set>
+    </export>
+</phyphox>

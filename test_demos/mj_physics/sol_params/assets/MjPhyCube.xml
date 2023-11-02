@@ -1,0 +1,15 @@
+<mujoco model="MjPhyCube">
+  <worldbody>
+    <body name="cube" pos="0.6 0.0 0.05" quat="1 0 0 0">
+      <geom pos="0 0 0" size="0.02 0.02 0.02" type="box" />
+      <site name="top" rgba="1 0 0 1" pos="0 0 0.02" type="box" />
+      <freejoint />
+    </body>
+  </worldbody>
+  <sensor>
+    <framepos objtype="site" objname="top" />
+    <framexaxis objtype="site" objname="top" />
+    <frameyaxis objtype="site" objname="top" />
+    <framezaxis objtype="site" objname="top" />
+  </sensor>
+</mujoco>

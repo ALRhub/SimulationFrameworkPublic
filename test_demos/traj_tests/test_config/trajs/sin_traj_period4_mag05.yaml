@@ -1,0 +1,9 @@
+space: "joint"
+traj_type: "dummy"
+duration: 2.0
+dt: 0.001
+dofs: 7
+traj_shape: "sin"
+period: 4.0
+phase: 1.0
+magnitude: 0.5

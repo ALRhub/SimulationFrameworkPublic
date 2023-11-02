@@ -1,0 +1,46 @@
+# optimizer
+optimizer: "cma_es"
+
+# num of calls of the optimizer
+n_trials: 1
+
+# num of jobs
+n_jobs: 1
+
+# parameters
+params:
+  dgain:
+    min:
+      - 5.0
+      - 5.0
+      - 5.0
+      - 5.0
+      - 3.0
+      - 2.0
+      - 1.0
+    max:
+      - 20.0
+      - 20.0
+      - 20.0
+      - 20.0
+      - 12.0
+      - 10.0
+      - 6.0
+
+  pgain:
+    min:
+      - 60.0
+      - 60.0
+      - 60.0
+      - 60.0
+      - 20.0
+      - 10.0
+      - 5.0
+    max:
+      - 240.0
+      - 240.0
+      - 240.0
+      - 240.0
+      - 100.0
+      - 60.0
+      - 20.0

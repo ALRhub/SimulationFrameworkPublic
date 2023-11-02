@@ -2,15 +2,17 @@ import xml.etree.ElementTree as Et
 
 import numpy as np
 
-from classic_framework.mujoco.mujoco_utils.mujoco_scene_object import MujocoLoadable
+from alr_sim.core.sim_object.sim_object import SimObject
+from alr_sim.sims.mujoco.MujocoLoadable import MujocoLoadable
 
 
-class KitBashContainer(MujocoLoadable):
+class KitBashContainer(SimObject, MujocoLoadable):
     """
     Procedurally generated Object consisting of multiple box geoms.
     It iss a graph-like structure.
     """
-    counter = 0
+
+    STATIC_COUNT = 0
 
     def __init__(self, max_children=6):
         """
@@ -18,15 +20,23 @@ class KitBashContainer(MujocoLoadable):
             max_children: max number of boxes the kitbash object consists of
         """
         # Random initialization
-        self.pos = np.append(np.random.random_integers(-10, 10, 2) / 10, np.random.randint(1, 4))
-        self.name = 'kitbash{}'.format(KitBashContainer.counter)
+        pos = np.append(
+            np.random.random_integers(-10, 10, 2) / 10, np.random.randint(1, 4)
+        )
+        name = "kitbash{}".format(KitBashContainer.STATIC_COUNT)
+
+        super(KitBashContainer, self).__init__(name, pos, None)
+
         self.euler = np.random.uniform(size=3)
-        KitBashContainer.counter += 1
+        KitBashContainer.STATIC_COUNT += 1
 
         # Generate child geoms
         self.children = []
         children = np.random.randint(2, max_children)
         self.grow(children)
+
+    def get_poi(self) -> list:
+        return [self.name]
 
     def grow(self, children: int):
         """
@@ -58,16 +68,16 @@ class KitBashContainer(MujocoLoadable):
         # Recursive Call
         return self.grow(children - 1)
 
-    def to_xml(self, scene_dir: str):
-        object_body = Et.Element('body')
-        object_body.set('name', self.name)
-        object_body.set('pos', ' '.join(map(str, self.pos)))
-        object_body.set('euler', ' '.join(map(str, self.euler)))
-        freejoint = Et.SubElement(object_body, 'freejoint')
+    def to_mj_xml(self, scene_dir: str):
+        object_body = Et.Element("body")
+        object_body.set("name", self.name)
+        object_body.set("pos", " ".join(map(str, self.init_pos)))
+        object_body.set("euler", " ".join(map(str, self.euler)))
+        freejoint = Et.SubElement(object_body, "freejoint")
 
         # get geoms from child nodes
         for c in self.children:
-            object_body.append(c.to_geom())
+            object_body.append(c.to_geom_xml())
 
         return object_body, False
 
@@ -118,7 +128,7 @@ class KitBashNode:
         Returns:
             sign, axis --> sign is the direction in -1/+1, axis is the index corresponding to XYZ
         """
-        sign = -1 ** (side > 2)
+        sign = -(1 ** (side > 2))
         axis = side % 3
         return sign, axis
 
@@ -133,7 +143,7 @@ class KitBashNode:
         """
         sign, axis = self.get_side_characteristics(side)
         # Choose a random point in the bounding box
-        pos = [np.random.uniform(- self.size[i], self.size[i]) for i in range(3)]
+        pos = [np.random.uniform(-self.size[i], self.size[i]) for i in range(3)]
 
         # clamp the chosen axis in its `sign` direction to transform the point to be on the outer bounding box
         pos[axis] = sign * self.size[axis]
@@ -154,16 +164,16 @@ class KitBashNode:
                     chosen_side = side
         return chosen_side
 
-    def to_geom(self):
+    def to_geom_xml(self):
         """
         transform the KitBashNode to a XML geom node to use in the mujoco scene XML
         Returns:
             geom: XML Element
         """
-        geom = Et.Element('geom')
-        geom.set('type', 'box')
-        geom.set('size', ' '.join(map(str, self.size)))
-        geom.set('rgba', ' '.join(map(str, self.rgba)))
-        geom.set('pos', ' '.join(map(str, self.pos)))
+        geom = Et.Element("geom")
+        geom.set("type", "box")
+        geom.set("size", " ".join(map(str, self.size)))
+        geom.set("rgba", " ".join(map(str, self.rgba)))
+        geom.set("pos", " ".join(map(str, self.pos)))
 
         return geom
